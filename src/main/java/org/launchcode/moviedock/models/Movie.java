@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Entity
-public class Movies extends AbstractEntity{
+public class Movie extends AbstractEntity{
 
     @NotNull(message = "Movie name is needed")
     private String name;
@@ -20,10 +20,10 @@ public class Movies extends AbstractEntity{
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private final List<Reviews> reviewsList = new ArrayList<>();
+    private final List<Review> reviewsList = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "favorites")
+    @JoinTable(name = "favorite")
     private final List<User> favUser = new ArrayList<>();
 
 
@@ -31,12 +31,12 @@ public class Movies extends AbstractEntity{
     @JoinTable(name = "wishList")
     private final List<User> wishUser = new ArrayList<>();
 
-    public Movies(String name, int search_count) {
+    public Movie(String name, int search_count) {
         this.name = name;
         this.search_count = search_count;
     }
 
-    public Movies() {
+    public Movie() {
     }
 
     public String getName() {
@@ -51,8 +51,16 @@ public class Movies extends AbstractEntity{
         this.search_count = search_count;
     }
 
-    public List<Reviews> getReviewsList() {
+    public List<Review> getReviewsList() {
         return reviewsList;
+    }
+
+    public List<User> getFavUser() {
+        return favUser;
+    }
+
+    public List<User> getWishUser() {
+        return wishUser;
     }
 
     @Override

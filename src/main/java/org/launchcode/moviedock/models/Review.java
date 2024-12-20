@@ -4,14 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
-public class Reviews extends AbstractEntity{
+public class Review extends AbstractEntity{
 
     @ManyToOne
     @NotNull(message= "select movie to review")
-    private Movies movie;
+    private Movie movie;
 
 
     @ManyToOne
@@ -19,22 +20,24 @@ public class Reviews extends AbstractEntity{
     private User user;
 
     @NotBlank
+    @Size(min = 3,max = 500)
     private String review_text;
 
 //    provide a dropdown to select options from 1-5
+    @NotNull
     private int star_rating;
 
-    public Reviews(Movies movie, User user, String review_text, int star_rating) {
+    public Review(Movie movie, User user, String review_text, int star_rating) {
         this.movie = movie;
         this.user = user;
         this.review_text = review_text;
         this.star_rating = star_rating;
     }
 
-    public Reviews() {
+    public Review() {
     }
 
-    public Movies getMovie() {
+    public Movie getMovie() {
         return movie;
     }
 

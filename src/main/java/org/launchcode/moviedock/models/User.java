@@ -22,13 +22,13 @@ public class User extends AbstractEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private final List<Reviews> reviewsList = new ArrayList<>();
+    private final List<Review> reviewsList = new ArrayList<>();
 
     @ManyToMany(mappedBy = "favUser")
-    private final List<Movies> favoriteMovies = new ArrayList<>();
+    private final List<Movie> favoriteMovies = new ArrayList<>();
 
     @ManyToMany(mappedBy = "wishUser")
-    private final List<Movies> wishMovies = new ArrayList<>();
+    private final List<Movie> wishMovies = new ArrayList<>();
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -43,8 +43,16 @@ public class User extends AbstractEntity {
         return username;
     }
 
-    public List<Reviews> getReviewsList() {
+    public List<Review> getReviewsList() {
         return reviewsList;
+    }
+
+    public List<Movie> getFavoriteMovies() {
+        return favoriteMovies;
+    }
+
+    public List<Movie> getWishMovies() {
+        return wishMovies;
     }
 
     public boolean isMatchingPassword(String password) {
