@@ -28,8 +28,8 @@ public class Movie extends AbstractEntity{
 
 
     @ManyToMany
-    @JoinTable(name = "wishList")
-    private final List<User> wishUser = new ArrayList<>();
+    @JoinTable(name = "toWatchList")
+    private final List<User> toWatchUser = new ArrayList<>();
 
     public Movie(String name, int search_count) {
         this.name = name;
@@ -59,8 +59,8 @@ public class Movie extends AbstractEntity{
         return favUser;
     }
 
-    public List<User> getWishUser() {
-        return wishUser;
+    public List<User> getToWatchUserUser() {
+        return toWatchUser;
     }
 
     @Override

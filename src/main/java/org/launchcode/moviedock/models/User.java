@@ -1,21 +1,28 @@
 package org.launchcode.moviedock.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.persistence.*;//for ENTITY ,ManyToMany etc.
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 public class User extends AbstractEntity {
 
-    @NotNull(message = "This field is required")
+    @NotBlank
     private String username;
 
-    @NotNull
+    @NotBlank
+    @Email
+    private String email;
+
+    @NotEmpty
     private String pwHash;
+
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
 
     @OneToMany(
             mappedBy = "user",
@@ -27,21 +34,34 @@ public class User extends AbstractEntity {
     @ManyToMany(mappedBy = "favUser")
     private final List<Movie> favoriteMovies = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "wishUser")
-    private final List<Movie> wishMovies = new ArrayList<>();
+    @ManyToMany(mappedBy = "toWatchUser")
+    private final List<Movie> toWatchMovies = new ArrayList<>();
 
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User () {}
 
-    public User (String username, String password) {
+    public User (String username, String email, String password) {
         this.username = username;
+        this.email = email;
         this.pwHash = encoder.encode(password);
     }
 
     public String getUsername() {
         return username;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
     public List<Review> getReviewsList() {
         return reviewsList;
@@ -51,8 +71,8 @@ public class User extends AbstractEntity {
         return favoriteMovies;
     }
 
-    public List<Movie> getWishMovies() {
-        return wishMovies;
+    public List<Movie> getToWatchMovies() {
+        return toWatchMovies;
     }
 
     public boolean isMatchingPassword(String password) {
