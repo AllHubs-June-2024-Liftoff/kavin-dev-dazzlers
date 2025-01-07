@@ -69,6 +69,15 @@ public class HomeController {
         return "search";
     }
 
+    @GetMapping("/movie")
+    public String moviePage(Model model, HttpServletRequest request) {
+
+        model.addAttribute("option", getOption(request));
+        model.addAttribute("path", getPath(request));
+
+        return "movie";
+    }
+
     @GetMapping("/profile")
     public String displayCurrentUserProfile(Model model, HttpServletRequest request) {
 
