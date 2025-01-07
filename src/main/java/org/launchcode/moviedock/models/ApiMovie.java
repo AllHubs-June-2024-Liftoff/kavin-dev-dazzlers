@@ -24,14 +24,15 @@ import java.net.URL;
 @Entity
 public class ApiMovie extends AbstractEntity{
 
-
+    //api key
     private String url = "http://www.omdbapi.com/?apikey=b0901f52&t=";
 
 
-    //currently this is only working when i have a hard coded movie in the url, this is close for now.
-    //messy code, need to refactor.
 
-    //would probably be easier to work with raw json but hey it works
+    //messy code, need to refactor to place relevant data into the fields of the ApiMovie class and to work with teams code
+    //testing shows it will pull newest movie, could think about adding an optional year search for remakes.
+    //would probably be easier to work with raw json but hey it works for now
+
     public String getMovieInfo(String t) {
         try {
             URL url = new URL("http://www.omdbapi.com/?apikey=b0901f52&t="+t);
