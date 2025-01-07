@@ -67,17 +67,13 @@ public class ApiMovie extends AbstractEntity{
 
 
 
-//url for API key
-
-
-
     private String title;
     private String director;
     private String year;
     private String info;
 
 
-    //will be refactoring,just showing that the database can work
+
     public ApiMovie() {
 
 
