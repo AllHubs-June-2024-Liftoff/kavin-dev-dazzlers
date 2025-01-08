@@ -1,5 +1,6 @@
 package org.launchcode.moviedock.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.launchcode.moviedock.data.ApiMovieRepository;
@@ -25,22 +26,25 @@ public class ApiMovieController {
 
 
     @PostMapping("movie")
-    public String processSearchResults(@ModelAttribute @Valid ApiMovie apiMovie, Model model, @RequestParam String searchTerm){
+    public String processSearchResults(@ModelAttribute @Valid ApiMovie apiMovie, Model model, @RequestParam String searchTerm) throws JsonProcessingException {
 
         model.addAttribute("title", "search for a movie");
 
 
+        apiMovie.setMovieInfo(searchTerm);
         String year = apiMovie.getYear();
+        String title = apiMovie.getTitle();
         String director = apiMovie.getDirector();
 
-        apiMovie.setTitle(searchTerm);
-        String name = apiMovie.getTitle();
-
-        String info = apiMovie.getInfo();
 
 
-        model.addAttribute("name", name);
-        model.addAttribute("info", info);
+
+
+
+        model.addAttribute("title", title);
+        model.addAttribute("year", year);
+
+
         return "movie";
     }
 
