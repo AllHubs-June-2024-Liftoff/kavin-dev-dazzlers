@@ -18,35 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("movie")
 public class ApiMovieController {
 
-    @Autowired
-    private ApiMovieRepository apiMovieRepository;
 
-
-
-    @PostMapping("movie")
-    public String processSearchResults(@ModelAttribute @Valid ApiMovie apiMovie, Model model, @RequestParam String searchTerm) throws JsonProcessingException {
-
-        model.addAttribute("title", "search for a movie");
-
-
-        apiMovie.setMovieInfo(searchTerm);
-        String year = apiMovie.getYear();
-        String title = apiMovie.getTitle();
-        String director = apiMovie.getDirector();
-
-
-
-
-
-
-        model.addAttribute("title", title);
-        model.addAttribute("year", year);
-
-
-        return "movie";
-    }
 
 
 }

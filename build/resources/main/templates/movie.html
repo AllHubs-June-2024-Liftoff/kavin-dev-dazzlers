@@ -6,39 +6,16 @@
 <nav th:replace="fragments :: header"></nav>
 
 
-<div class="container body-content">
-    <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+<p>at the movie page</p>
 
-    <form th:action="@{/movie}" method = "post">
-
-
-
-
-        <p>
-            <label for="searchTerm">Keyword:</label>
-            <input type="text" name="searchTerm" id="searchTerm" />
-        </p>
-
-        <input type="submit" value="Search" />
-    </form>
-
-    <hr />
-
-    <th:block th:text="${title}"></th:block>
-    <th:block th:text="${year}"></th:block>
-
-
-
-
+<p>
+<h3 th:text="${title}"></h3>
+<h2 th:text="${year}"></h2>
+</p>
 
 
 
 </div>
-
-
-
-
-
 
 
 </body>

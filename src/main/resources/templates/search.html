@@ -4,6 +4,33 @@
 
 <body class="container bg-1">
 <nav th:replace="fragments :: header"></nav>
-<h1>Search functionality could go here? Do whatever you like with this template. If you change the name, make sure to update it in fragments in the href="/search"</h1>
+
+
+<div class="container body-content">
+    <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+
+    <form th:action="@{/search/results}" method = "post">
+
+
+
+
+        <p>
+            <label for="searchTerm">Keyword:</label>
+            <input type="text" name="searchTerm" id="searchTerm" />
+        </p>
+
+        <input type="submit" value="Search" />
+    </form>
+
+    <hr />
+
+
+    <a th:href="@{'/movie'}"th:text="${title}"></a>
+    <th:block th:text="${year}"></th:block>
+
+
+
+
+
 </body>
 </html>

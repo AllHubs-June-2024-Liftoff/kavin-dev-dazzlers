@@ -29,43 +29,18 @@ public class ApiMovie extends AbstractEntity{
     //would probably be easier to work with raw json but hey it works for now
 
 
-    public String getMovieInfo(String t) {
-        try {
-            URL url = new URL("http://www.omdbapi.com/?apikey=b0901f52&t="+t);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET"); // or "POST", etc.
 
-            int responseCode = connection.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            if (responseCode == HttpURLConnection.HTTP_OK) { // success
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-                // Print the response
-                return response.toString();
-            } else {
-                return "GET request failed";
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "blah";
-    }
-
-    public String getMovie(String t) {
+    public String getMovieByName(String t) {
         String url = "http://www.omdbapi.com/?apikey=b0901f52&t="+t;
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(url, String.class);
     }
 
-
+    public String getMovieById(String i){
+        String url = "http://www.omdbapi.com/?apikey=b0901f52&t="+i;
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(url, String.class);
+    }
 
 
 
@@ -75,6 +50,7 @@ public class ApiMovie extends AbstractEntity{
     private String plot;
     private String poster;
     private String year;
+    private String apiID;
 
 
 
@@ -83,21 +59,29 @@ public class ApiMovie extends AbstractEntity{
 
     }
 
-    public void setMovieInfo(String t) throws JsonProcessingException {
+    public void setMovieInfoByName(String t) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode node = objectMapper.readTree(this.getMovie(t));
+        JsonNode node = objectMapper.readTree(this.getMovieByName(t));
 
         this.title = node.get("Title").asText();
         this.director = node.get("Director").asText();
         this.plot = node.get("Plot").asText();
         this.poster = node.get("Poster").asText();
         this.year = node.get("Year").asText();
-
-
-
+        this.apiID = node.get("imdbID").asText();
     }
 
+    public void setMovieInfoById(String i) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode node = objectMapper.readTree(this.getMovieById(i));
 
+        this.title = node.get("Title").asText();
+        this.director = node.get("Director").asText();
+        this.plot = node.get("Plot").asText();
+        this.poster = node.get("Poster").asText();
+        this.year = node.get("Year").asText();
+        this.apiID = node.get("imdbID").asText();
+    }
 
 
     public String getTitle() {
@@ -108,16 +92,21 @@ public class ApiMovie extends AbstractEntity{
         return director;
     }
 
+    public String getPlot() {
+        return plot;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
     public String getYear() {
         return year;
     }
 
-
-    public String getInfo() {
-        return getMovieInfo(this.title);
+    public String getApiID() {
+        return apiID;
     }
-
-
 
     @Override
     public String toString() {
