@@ -4,6 +4,32 @@
 
 <body class="container bg-1">
 <nav th:replace="fragments :: header"></nav>
-<h1>Search functionality could go here? Do whatever you like with this template. If you change the name, make sure to update it in fragments in the href="/search"</h1>
+
+<!--<h1>Search functionality could go here? Do whatever you like with this template. If you change the name, make sure to update it in fragments in the href="/search"</h1>-->
+
+<form th:action="@{/search}" method="post">
+    <div class="form-group">
+
+        <label>
+            <input type="text" name="searchName" class="form-control"/>
+        </label>
+
+
+    </div>
+    <input type="submit" value="Search User" class="btn btn-primary">
+</form>
+
+<p th:text="${blankField}"></p>
+<table th:if="${usersList != null}" style="width:25%" class="table">
+    <thead>
+    <tr>
+        <th>Match found for searched user</th>
+    </tr>
+    </thead>
+   <tr th:each="user : ${usersList}">
+       <td th:text="${user.username}"></td>
+   </tr>
+</table>
+
 </body>
 </html>
