@@ -25,7 +25,7 @@
     <hr />
 
 
-    <a th:href="@{'/movie'}"th:text="${title}"></a>
+    <a th:href="@{'movie/' + ${apiId}}"th:text="${title}"></a>
     <th:block th:text="${year}"></th:block>
 
 

@@ -21,6 +21,12 @@ public class SearchController {
     @Autowired
     private ApiMovieRepository apiMovieRepository;
 
+    @GetMapping("results")
+    public String index(Model model){
+        model.addAttribute("title", "search for a movie");
+        return "search";
+    }
+
 
     @PostMapping("results")
     public String processSearchResults(@ModelAttribute @Valid ApiMovie apiMovie, Model model, @RequestParam String searchTerm) throws JsonProcessingException {
@@ -35,9 +41,6 @@ public class SearchController {
 
 
 
-
-
-
         model.addAttribute("title", title);
         model.addAttribute("year", year);
         model.addAttribute("apiId", apiId);
@@ -45,21 +48,17 @@ public class SearchController {
         return "search";
     }
 
-    @GetMapping("movie/{title}")
-    public String displayViewMovies(Model model, @PathVariable int title) {
-        Optional<ApiMovie> optApi = apiMovieRepository.findById(title);
-        if (optApi.isPresent()){
-            ApiMovie apiMovie = (ApiMovie) optApi.get();
-            model.addAttribute("apiMovie", apiMovie);
-            return "movie";
-        }
-        else {
-            return "redirect:../";
-        }
+
+    @GetMapping("movie/{apiId}")
+    public String displayViewMovie(Model model, @PathVariable String apiId) {
 
 
 
-        //return "view";
+
+
+
+
+        return "movie";
     }
 
 
