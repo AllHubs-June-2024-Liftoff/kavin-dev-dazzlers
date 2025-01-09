@@ -37,7 +37,7 @@ public class ApiMovie extends AbstractEntity{
     }
 
     public String getMovieById(String i){
-        String url = "http://www.omdbapi.com/?apikey=b0901f52&t="+i;
+        String url = "http://www.omdbapi.com/?apikey=b0901f52&i="+i;
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(url, String.class);
     }

@@ -50,13 +50,23 @@ public class SearchController {
 
 
     @GetMapping("movie/{apiId}")
-    public String displayViewMovie(Model model, @PathVariable String apiId) {
+    public String displayViewMovie(Model model, @PathVariable String apiId, @ModelAttribute @Valid ApiMovie apiMovie) throws JsonProcessingException{
 
 
 
+        apiMovie.setMovieInfoById(apiId);
 
+        String year = apiMovie.getYear();
+        String title = apiMovie.getTitle();
+        String plot = apiMovie.getPlot();
+        String director = apiMovie.getDirector();
+        String poster = apiMovie.getPoster();
 
-
+        model.addAttribute("plot", plot);
+        model.addAttribute("year", year);
+        model.addAttribute("title", title);
+        model.addAttribute("director", director);
+        model.addAttribute("poster", poster);
 
         return "movie";
     }
