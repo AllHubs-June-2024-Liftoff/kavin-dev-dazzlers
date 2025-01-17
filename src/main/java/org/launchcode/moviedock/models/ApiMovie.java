@@ -1,6 +1,7 @@
 package org.launchcode.moviedock.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
@@ -14,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -42,6 +45,23 @@ public class ApiMovie extends AbstractEntity{
 
 
 
+
+    public String getMoviesBySearch(String s){
+        String url = "http://www.omdbapi.com/?apikey=b0901f52&s="+s;
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    public void getMovies(String s) throws JsonProcessingException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode node = objectMapper.readTree(this.getMoviesBySearch(s));
+        System.out.println(node);
+
+    }
+
+
+
     private String title;
     private String director;
     private String plot;
@@ -57,6 +77,8 @@ public class ApiMovie extends AbstractEntity{
     public ApiMovie() {
         this.viewCount = 0;
     }
+
+
 
     public void setMovieInfoByName(String t) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();

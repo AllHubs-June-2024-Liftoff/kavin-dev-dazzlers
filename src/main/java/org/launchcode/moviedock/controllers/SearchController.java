@@ -34,6 +34,8 @@ public class SearchController {
         model.addAttribute("title", "search for a movie");
 
 
+        apiMovie.getMovies(searchTerm);
+
         apiMovie.setMovieInfoByName(searchTerm);
         String year = apiMovie.getYear();
         String title = apiMovie.getTitle();
