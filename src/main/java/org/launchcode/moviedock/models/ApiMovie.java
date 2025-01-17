@@ -24,9 +24,6 @@ public class ApiMovie extends AbstractEntity{
 
 
 
-    //messy code, need to refactor to place relevant data into the fields of the ApiMovie class and to work with teams code
-    //testing shows it will pull newest movie, could think about adding an optional year search for remakes.
-    //would probably be easier to work with raw json but hey it works for now
 
 
 
@@ -52,37 +49,50 @@ public class ApiMovie extends AbstractEntity{
     private String year;
     private String apiID;
 
+    private int viewCount;
+
 
 
 
     public ApiMovie() {
-
+        this.viewCount = 0;
     }
 
     public void setMovieInfoByName(String t) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode node = objectMapper.readTree(this.getMovieByName(t));
 
-        this.title = node.get("Title").asText();
-        this.director = node.get("Director").asText();
-        this.plot = node.get("Plot").asText();
-        this.poster = node.get("Poster").asText();
-        this.year = node.get("Year").asText();
-        this.apiID = node.get("imdbID").asText();
+        if (node.get("Title")!=null) {
+            this.title = node.get("Title").asText();
+            this.director = node.get("Director").asText();
+            this.plot = node.get("Plot").asText();
+            this.poster = node.get("Poster").asText();
+            this.year = node.get("Year").asText();
+            this.apiID = node.get("imdbID").asText();
+        }
     }
 
     public void setMovieInfoById(String i) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode node = objectMapper.readTree(this.getMovieById(i));
 
-        this.title = node.get("Title").asText();
-        this.director = node.get("Director").asText();
-        this.plot = node.get("Plot").asText();
-        this.poster = node.get("Poster").asText();
-        this.year = node.get("Year").asText();
-        this.apiID = node.get("imdbID").asText();
+        if (node.get("Title")!=null) {
+            this.title = node.get("Title").asText();
+            this.director = node.get("Director").asText();
+            this.plot = node.get("Plot").asText();
+            this.poster = node.get("Poster").asText();
+            this.year = node.get("Year").asText();
+            this.apiID = node.get("imdbID").asText();
+        }
     }
 
+    public void userView(){
+        this.viewCount++;
+    }
+
+    public int getViewCount() {
+        return viewCount;
+    }
 
     public String getTitle() {
         return title;

@@ -38,12 +38,15 @@ public class SearchController {
         String year = apiMovie.getYear();
         String title = apiMovie.getTitle();
         String apiId = apiMovie.getApiID();
+        String plot = apiMovie.getPlot();
+
 
 
 
         model.addAttribute("title", title);
         model.addAttribute("year", year);
         model.addAttribute("apiId", apiId);
+
 
         return "search";
     }
@@ -68,8 +71,24 @@ public class SearchController {
         model.addAttribute("director", director);
         model.addAttribute("poster", poster);
 
+
+        Optional<ApiMovie> optApiMovie = apiMovieRepository.findById(apiMovie.getId());
+        if (optApiMovie.isPresent()) {
+            ApiMovie a = (ApiMovie) optApiMovie.get();
+            a.userView();
+            apiMovieRepository.save(a);
+        }
+        else{
+            apiMovieRepository.save(apiMovie);
+        }
+
+
+
+
         return "movie";
     }
+
+
 
 
 
