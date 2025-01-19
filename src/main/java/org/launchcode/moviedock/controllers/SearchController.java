@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.launchcode.moviedock.models.dto.MovieHelper;
 
 import java.util.Optional;
 
@@ -34,7 +35,9 @@ public class SearchController {
         model.addAttribute("title", "search for a movie");
 
 
-        apiMovie.getMovies(searchTerm);
+        MovieHelper mh = new MovieHelper();
+        System.out.println(mh.makeMovieList(searchTerm)[0]);
+
 
         apiMovie.setMovieInfoByName(searchTerm);
         String year = apiMovie.getYear();
