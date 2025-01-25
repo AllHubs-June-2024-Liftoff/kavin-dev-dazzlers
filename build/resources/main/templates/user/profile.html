@@ -77,7 +77,7 @@
 <!--                    >Delete</button>-->
 <!--                </form>-->
 
-                <form th:if="${hasAuthority}" th:action="@{/delete_review(reviewId=${user.reviewsList[i].id})}" method="post">
+                <form th:unless="${selfProfile =='false'}" th:action="@{/delete_review(reviewId=${user.reviewsList[i].id})}" method="post">
                 <button type="submit" class="btn btn-danger btn-xs"
                         th:data-confirm-delete="|Are you sure you want to delete review for: ${user.reviewsList[i].movie.name}?|"
                         onclick="return confirm(this.getAttribute('data-confirm-delete'))"
@@ -97,6 +97,5 @@
         </tr>
     </table>
 </div>
-
 </body>
 </html>

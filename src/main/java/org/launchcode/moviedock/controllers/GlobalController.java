@@ -5,13 +5,14 @@ import org.launchcode.moviedock.models.AppUser;
 import org.launchcode.moviedock.models.Theme;
 import org.launchcode.moviedock.security.service.PrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Optional;
 
 
-@org.springframework.web.bind.annotation.ControllerAdvice
-public class ControllerAdvice {
+@ControllerAdvice
+public class GlobalController {
 
     @Autowired
     private PrincipalService principalService;
