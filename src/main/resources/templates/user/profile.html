@@ -15,7 +15,7 @@
     <thead>
     <tr>
         <th>Favorite Movie Name</th>
-        <th>Delete Favorite Movie</th>
+        <th th:if="${hasAuthority}">Delete Favorite Movie</th>
     </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
         <td><a th:href="@{'/search/movie-view/' + ${favoriteMovie.getApiID()}}" th:text="${favoriteMovie.name}"></a>
         <td><form th:action="@{/movies/{movieId}(movieId=${favoriteMovie.id})}" method="post">
             <input type="hidden" name="_method" value="delete">
-            <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+            <button th:if="${hasAuthority}" type="submit" class="btn btn-danger btn-xs">Delete</button>
         </form></td>
     </tr>
     </tbody>
@@ -33,7 +33,7 @@
     <thead>
     <tr>
         <th>To-Watch Movie Name</th>
-        <th>Delete To-Watch Movie</th>
+        <th th:if="${hasAuthority}">Delete To-Watch Movie</th>
     </tr>
     </thead>
     <tbody>
@@ -41,7 +41,7 @@
         <td><a th:href="@{'/search/movie-view/' + ${toWatchMovie.getApiID()}}" th:text="${toWatchMovie.name}"></a>
         <td><form th:action="@{/movies/to-watch-movie/{movieId}(movieId=${toWatchMovie.id})}" method="post">
             <input type="hidden" name="_method" value="delete">
-            <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+            <button th:if="${hasAuthority}" type="submit" class="btn btn-danger btn-xs">Delete</button>
         </form></td>
     </tr>
     </tbody>
@@ -77,7 +77,7 @@
 <!--                    >Delete</button>-->
 <!--                </form>-->
 
-                <form th:unless="${selfProfile =='false'}" th:action="@{/delete_review(reviewId=${user.reviewsList[i].id})}" method="post">
+                <form th:if="${hasAuthority}" th:action="@{/delete_review(reviewId=${user.reviewsList[i].id})}" method="post">
                 <button type="submit" class="btn btn-danger btn-xs"
                         th:data-confirm-delete="|Are you sure you want to delete review for: ${user.reviewsList[i].movie.name}?|"
                         onclick="return confirm(this.getAttribute('data-confirm-delete'))"
@@ -95,11 +95,7 @@
 
             </td>
         </tr>
-
-
     </table>
-
-
 </div>
 
 </body>

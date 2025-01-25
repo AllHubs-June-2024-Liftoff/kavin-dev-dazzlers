@@ -84,6 +84,7 @@ public class HomeController {
     public String myProfile(Model model) {
         AppUser user = principalService.getPrincipal();
         model.addAttribute("user", user);
+        model.addAttribute("hasAuthority", true);
 
         return "user/profile";
     }
@@ -91,9 +92,10 @@ public class HomeController {
     @GetMapping("/profile/{username}")
     public String viewProfile(@PathVariable String username, Model model) {
 
+
         Optional<AppUser> appUser = appUserRepository.findByUsername(username);
 
-        if(appUser.isPresent()) {
+        if (appUser.isPresent()) {
             AppUser user = (AppUser) appUser.get();
             model.addAttribute("user", user);
             return "user/profile";

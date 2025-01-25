@@ -114,6 +114,7 @@ public class ReviewController {
 
 
             model.addAttribute("user", user);
+            model.addAttribute("hasAuthority", true);
 //            model.addAttribute("reviews",reviewRepository.findByUserId(user.getId()));
 //            model.addAttribute("movies",movieRepository.findAllById(reviewRepository.findMovieByUserId(user.getId())));
             return "user/profile.html";
@@ -132,6 +133,7 @@ public class ReviewController {
         reviewRepository.deleteById(reviewId);
         AppUser user = principalService.getPrincipal();
         model.addAttribute("user",user);
+        model.addAttribute("hasAuthority", true);
         return "user/profile.html";
 
     }

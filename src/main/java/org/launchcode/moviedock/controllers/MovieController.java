@@ -49,6 +49,7 @@ public class MovieController {
             return "/movies/add-favorite-movie";
         }
         else {
+            model.addAttribute("hasAuthority", true);
             return "redirect:/profile";
         }
 
@@ -65,6 +66,7 @@ public class MovieController {
             user.addFavoriteMovies(movie);
             appUserRepository.save(user);
             model.addAttribute("user", user);
+            model.addAttribute("hasAuthority", true);
             return "user/profile";
         }
         return "redirect:movies/add-favorite-movie?" +movie.getId();
@@ -87,6 +89,7 @@ public class MovieController {
             model.addAttribute("userMovieDTO",userMovieDTO);
             return "/movies/add-to-watch-movie";
         }else {
+            model.addAttribute("hasAuthority", true);
             return "redirect:/profile";
         }
 
@@ -102,6 +105,7 @@ public class MovieController {
             user.addToWatchMovies(movie);
             appUserRepository.save(user);
             model.addAttribute("user", user);
+            model.addAttribute("hasAuthority", true);
             return "user/profile";
         }
         return "redirect:movies/add-to-watch-movie?" +movie.getId();
@@ -115,6 +119,7 @@ public class MovieController {
         model.addAttribute("user",user);
         user.removeFavoriteMovie(movie.get());
         appUserRepository.save(user);
+        model.addAttribute("hasAuthority", true);
         return "user/profile";
     }
 
@@ -125,6 +130,7 @@ public class MovieController {
         model.addAttribute("user",user);
         user.removeToWatchMovie(movie.get());
         appUserRepository.save(user);
+        model.addAttribute("hasAuthority", true);
         return "user/profile";
     }
 
