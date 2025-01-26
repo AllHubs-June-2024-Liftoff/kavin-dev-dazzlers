@@ -5,12 +5,15 @@ import jakarta.validation.Valid;
 import org.launchcode.moviedock.data.ApiMovieRepository;
 import org.launchcode.moviedock.data.MovieRepository;
 import org.launchcode.moviedock.models.*;
+import org.launchcode.moviedock.movie_rec.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.launchcode.moviedock.models.dto.MovieHelper;
+import org.launchcode.moviedock.movie_rec.Movie_rec;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -24,6 +27,11 @@ public class SearchController {
     @Autowired
     private MovieRepository movieRepository;
 
+
+
+    public SearchController() throws IOException {
+    }
+
     @GetMapping("results")
     public String index(Model model){
         //model.addAttribute("title", "search for a movie");
@@ -32,7 +40,7 @@ public class SearchController {
 
 
     @PostMapping("results")
-    public String processSearchResults(@ModelAttribute @Valid Movie movie, Model model, @RequestParam String searchTerm) throws JsonProcessingException {
+    public String processSearchResults(@ModelAttribute @Valid Movie movie, Model model, @RequestParam String searchTerm) throws IOException {
 
         //model.addAttribute("title", "search for a movie");
 
@@ -45,6 +53,10 @@ public class SearchController {
         movies = new Movie[listOfApiIds.length];
 
         model.addAttribute("apis", listOfApiIds);
+
+        Movie_rec mc = new Movie_rec();
+        mc.runFromJava();
+
 
 
         for (int i = 0; i < listOfApiIds.length; i++){

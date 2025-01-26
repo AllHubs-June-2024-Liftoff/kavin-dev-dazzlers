@@ -110,8 +110,6 @@ public class HomeController {
     @GetMapping("movie-view/{apiId}")
     public String displayViewMovie(Model model, @PathVariable String apiId, @ModelAttribute @Valid Movie movie) throws JsonProcessingException{
 
-
-
         movie.setMovieInfoById(apiId);
 
         String year = movie.getYear();

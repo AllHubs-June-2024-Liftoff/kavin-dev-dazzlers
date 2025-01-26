@@ -8,6 +8,7 @@ import java.io.*;
 public class Movie_rec {
 
 
+
     public Movie_rec() {}
 
     public boolean isWindows(){
@@ -37,12 +38,12 @@ public class Movie_rec {
             //String command = "NUL > EmptyFile.txt";
 
             if (isWindows()) {
-                command = "python .\\src\\main\\java\\org\\launchcode\\moviedock\\movie_rec\\movie_rec.py";
+                command = "python3 .\\src\\main\\java\\org\\launchcode\\moviedock\\movie_rec\\movie_rec.py";
                 start = "cmd";
                 flag = "/c";
             }
             else{
-                command = "./src/main/java/org/launchcode/moviedock/movie_rec/movie_rec.py";
+                command = "python3 ./src/main/java/org/launchcode/moviedock/movie_rec/movie_rec.py";
                 start = "/bin/sh";
                 flag = "-c";
             }
