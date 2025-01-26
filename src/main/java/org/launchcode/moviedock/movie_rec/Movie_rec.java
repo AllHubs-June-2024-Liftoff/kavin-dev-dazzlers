@@ -10,22 +10,45 @@ public class Movie_rec {
 
     public Movie_rec() {}
 
+    public boolean isWindows(){
+        String sysname = System.getProperty("os.name");
+        return sysname.startsWith("Windows");
+    }
 
 
     public String runFromJava() throws IOException {
         System.out.println("HI HI HIHIHI IM IN THE JAVA TEST IN THE JAVA SECTION");
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
+        //check OS
+        System.out.println(isWindows());
+
+        String start;
+        String flag;
+        String command;
+
         //for mac
         // "/bin/sh"
         // -c
-
+        // ./src/main/java/org/launchcode/moviedock/movie_rec/movie_rec.py
         Process proc = null;
         try {
-            String command = "python C:\\Users\\Dyerm\\IdeaProjects\\kavin-dev-dazzlers\\src\\main\\java\\org\\launchcode\\moviedock\\movie_rec\\movie_rec.py";
+
             //String command = "NUL > EmptyFile.txt";
-            proc = Runtime.getRuntime().exec(new String[] { "cmd"//$NON-NLS-1$
-                    , "/c", command });//$NON-NLS-1$
+
+            if (isWindows()) {
+                command = "python .\\src\\main\\java\\org\\launchcode\\moviedock\\movie_rec\\movie_rec.py";
+                start = "cmd";
+                flag = "/c";
+            }
+            else{
+                command = "./src/main/java/org/launchcode/moviedock/movie_rec/movie_rec.py";
+                start = "/bin/sh";
+                flag = "-c";
+            }
+
+            proc = Runtime.getRuntime().exec(new String[] { start//$NON-NLS-1$
+                    , flag, command });//$NON-NLS-1$
             if (proc != null) {
                 System.out.println("proc exists");
                 proc.waitFor();

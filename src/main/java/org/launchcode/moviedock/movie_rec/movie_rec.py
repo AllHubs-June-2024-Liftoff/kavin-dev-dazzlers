@@ -148,7 +148,7 @@ movie_user_matrix = pd.pivot(user_ratings, values ='rating',columns ='userId', i
 #zero out NAN
 movie_user_matrix = movie_user_matrix.fillna(0)
 #print(movie_user_matrix)
-movie_user_matrix.to_csv("movie_user_matrix.csv")
+#movie_user_matrix.to_csv("movie_user_matrix.csv")
 
 
 #cleaning data
