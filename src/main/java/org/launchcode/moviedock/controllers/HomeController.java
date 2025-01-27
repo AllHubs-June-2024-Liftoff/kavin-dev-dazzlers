@@ -209,5 +209,49 @@ public class HomeController {
         return "movie-view";
     }
 
+    //lazy fix
+    @GetMapping("/profile/movie-view/{apiId}")
+    public String displayProfileViewMovie(Model model, @PathVariable String apiId, @ModelAttribute @Valid Movie movie) throws JsonProcessingException{
+
+        movie.setMovieInfoById(apiId);
+
+        String year = movie.getYear();
+        String title = movie.getName();
+        String plot = movie.getPlot();
+        String director = movie.getDirector();
+        String poster = movie.getPoster();
+
+        model.addAttribute("plot", plot);
+        model.addAttribute("year", year);
+        model.addAttribute("title", title);
+        model.addAttribute("director", director);
+        model.addAttribute("poster", poster);
+
+
+
+
+        System.out.println(plot);
+        if (plot!=null) {
+            Optional<Movie> optMovie = MovieRepository.findByApiID(movie.getApiID());
+            if (optMovie.isPresent()) {
+                System.out.println(movie.getApiID());
+                Movie a = (Movie) optMovie.get();
+                System.out.println("it exists");
+                a.userView();
+                MovieRepository.save(a);
+                //            For adding review Link and diplaying reviews for the movie
+                model.addAttribute("movie",a);
+            }
+            else{
+                System.out.println("it doesn't exist");
+                movie.userView();
+                MovieRepository.save(movie);
+                //            For adding review Link and diplaying reviews for the movie
+                model.addAttribute("movie",movie);
+            }
+        }
+        return "movie-view";
+    }
+
 
 }
