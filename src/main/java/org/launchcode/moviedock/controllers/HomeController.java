@@ -6,16 +6,16 @@ import org.launchcode.moviedock.data.AppUserRepository;
 import org.launchcode.moviedock.data.MovieRepository;
 import org.launchcode.moviedock.models.AppUser;
 import org.launchcode.moviedock.models.Movie;
+import org.launchcode.moviedock.movie_rec.Movie_rec;
 import org.launchcode.moviedock.security.service.PrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.launchcode.moviedock.data.ReviewRepository;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -85,6 +85,9 @@ public class HomeController {
         AppUser user = principalService.getPrincipal();
         model.addAttribute("user", user);
 
+
+
+
         return "user/profile";
     }
 
@@ -101,6 +104,62 @@ public class HomeController {
             return "redirect:..";
         }
     }
+
+    @GetMapping("/profile/recommendations")
+    public String viewRecs(Model model) throws IOException {
+        AppUser user = principalService.getPrincipal();
+
+        Movie_rec mr = new Movie_rec();
+        mr.runFromJava();
+
+        int user_id = user.getId();
+        List<String> fullStrings = mr.convertCsvToStrings();
+        List<String> strippedApis = new ArrayList<>();
+
+        //return the apis that belong to user
+        for (String string : fullStrings){
+            if (mr.returnAPiOfUser(user_id, string)!=null) {
+                strippedApis.add(mr.returnAPiOfUser(user_id, string));
+            }
+        }
+
+        Movie[] movies = new Movie[strippedApis.size()];
+        String[] listOfApiIds = new String[strippedApis.size()];
+
+        for (int i = 0; i < strippedApis.size();i++){
+            listOfApiIds[i] = mr.makeApiSearchable(strippedApis.get(i));
+        }
+
+        for (int i = 0; i < listOfApiIds.length; i++){
+            Movie movie1 = new Movie();
+            movie1.setMovieInfoById(listOfApiIds[i]);
+
+            movies[i] = movie1;
+
+
+            String year = movie1.getYear();
+            String title = movie1.getName();
+            String apiId = movie1.getApiID();
+
+        }
+
+        //checks if movies is populated
+        if (movies.length>0) {
+            model.addAttribute("movies", movies);
+        }
+        else{
+            model.addAttribute("error", "No movies suggested, try rating or liking movies");
+        }
+
+
+        model.addAttribute("user",user);
+
+        return "/recommendations";
+    }
+
+
+
+
 
     @GetMapping("/search")
     public String search() {

@@ -49,14 +49,10 @@ public class SearchController {
         String[] listOfApiIds = mh.makeMovieList(searchTerm);
         Movie[] movies;
 
-        //the way text parsing is currently working, 10 movies are being sent to listOfApiIds
+
         movies = new Movie[listOfApiIds.length];
 
         model.addAttribute("apis", listOfApiIds);
-
-        Movie_rec mc = new Movie_rec();
-        mc.runFromJava();
-
 
 
         for (int i = 0; i < listOfApiIds.length; i++){
@@ -69,8 +65,6 @@ public class SearchController {
             String year = movie1.getYear();
             String title = movie1.getName();
             String apiId = movie1.getApiID();
-
-
 
         }
 

@@ -1,5 +1,8 @@
 package org.launchcode.moviedock.movie_rec;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import org.launchcode.moviedock.models.*;
 import org.launchcode.moviedock.models.Movie;
 
 import java.nio.file.Paths;
@@ -16,6 +19,71 @@ public class Movie_rec {
         return sysname.startsWith("Windows");
     }
 
+    public List<String> convertCsvToStrings() throws FileNotFoundException {
+       String csvFile  ="movie_rec_output.csv";
+       String line = "";
+
+        List<String> apiList = new ArrayList<String>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            // read each line of the CSV file
+            while ((line = br.readLine()) != null) {
+                // split the line into tokens using semicolon as the delimiter
+                String[] tokens = line.split(";");
+                // print each token
+                for (String token : tokens) {
+                    System.out.println(token);
+                    apiList.add(token);
+                }
+                System.out.println(); // move to the next line
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return apiList;
+
+    }
+
+
+    public String returnAPiOfUser(int id, String line){
+        String api = null;
+        boolean isId = false;
+        //only return if it matches
+        String[] b = line.split(",");
+        for (String a : b){
+            //if it matches next will be api returned
+            if (isId==true){
+                api = a;
+            }
+            //check if number matches with user id
+            if (Integer.parseInt(a)==id) {
+                isId = true;
+            }
+        }
+        return api;
+    }
+
+    public String makeApiSearchable(String unsearchable){
+
+        int sLength = unsearchable.length();
+        String prefix = "tt";
+
+        if (sLength == 6){
+            unsearchable = "0" + unsearchable;
+        }
+        if (sLength == 5){
+            unsearchable = "00" + unsearchable;
+        }
+        if (sLength == 4){
+            unsearchable = "000" + unsearchable;
+        }
+
+        String searchable = prefix + unsearchable;
+
+
+        return searchable;
+    }
 
     public String runFromJava() throws IOException {
         System.out.println("HI HI HIHIHI IM IN THE JAVA TEST IN THE JAVA SECTION");
