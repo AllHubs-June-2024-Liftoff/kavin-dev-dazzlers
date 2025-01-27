@@ -35,7 +35,7 @@ public class Movie_rec {
                     System.out.println(token);
                     apiList.add(token);
                 }
-                System.out.println(); // move to the next line
+
             }
         } catch (IOException e) {
             e.printStackTrace();
